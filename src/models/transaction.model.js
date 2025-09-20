@@ -7,6 +7,7 @@ const transactionSchema = new mongoose.Schema(
     category: { type: String, required: true },
     note: { type: String },
     date: { type: Date, default: Date.now },
+    user: { type: String, required: true }, 
   },
   { timestamps: true }
 );

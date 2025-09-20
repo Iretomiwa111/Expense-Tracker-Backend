@@ -3,7 +3,6 @@ const router = express.Router();
 const Transaction = require("../models/transaction.model");
 const authMiddleware = require("../middleware/auth.middleware")
 
-// GET all transactions for the logged-in user
 router.get("/", authMiddleware, async (req, res) => {
   try {
     const transactions = await Transaction.find({ user: req.user.email }).sort({ date: -1 });
@@ -13,7 +12,6 @@ router.get("/", authMiddleware, async (req, res) => {
   }
 });
 
-// POST new transaction
 router.post("/", authMiddleware, async (req, res) => {
   const { type, amount, category, note } = req.body;
   const transaction = new Transaction({
@@ -21,7 +19,7 @@ router.post("/", authMiddleware, async (req, res) => {
     amount,
     category,
     note,
-    user: req.user.email, // associate transaction with logged-in user
+    user: req.user.email, 
   });
 
   try {
@@ -32,7 +30,6 @@ router.post("/", authMiddleware, async (req, res) => {
   }
 });
 
-// DELETE transaction (only if it belongs to the user)
 router.delete("/:id", authMiddleware, async (req, res) => {
   try {
     const transaction = await Transaction.findById(req.params.id);
